@@ -1,0 +1,46 @@
+{
+  "name": "phramework/basicAuthentication",
+  "description": "basicAuthentication implementation for Phramework",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Phramework",
+  "authors": [{
+    "name": "Xenophon Spafaridis",
+    "email": "nohponex@gmail.com",
+    "homepage": "https://nohponex.gr"
+  }],
+  "repositories": [{
+    "type": "vcs",
+    "url": "git@gitlab.mathlogic.eu:Phramework/Phramework.git"
+  }],
+  "require": {
+    "php": ">=5.6",
+    "phramework/phramework": "dev-master#bbd31f4ec0cc5002da502db102248411e02301ff",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "phpunit/phpunit": "5.*"
+  },
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Phramework\\Authentication\\BasicAuthentication\\": "src"
+    }
+  },
+  "autoload-dev": {},
+  "archive": {
+    "exclude": [
+      "*",
+      ".*",
+      "!/src/*"
+    ]
+  },
+  "scripts": {
+    "test": [
+      "find src/ -name '*.php' -print0 | xargs -0 -L 1 php -l",
+      "find tests/ -name '*.php' -print0 | xargs -0 -L 1 php -l",
+      "phpunit"
+    ],
+    "lint": "./vendor/bin/phpcs -p -s --standard=PSR2 ./src ./tests"
+  }
+}
