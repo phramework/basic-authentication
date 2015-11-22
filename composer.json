@@ -14,7 +14,7 @@
   }],
   "require": {
     "php": ">=5.6",
-    "phramework/phramework": "dev-master#bbd31f4ec0cc5002da502db102248411e02301ff",
+    "phramework/phramework": "dev-master",
     "ext-json": "*"
   },
   "require-dev": {

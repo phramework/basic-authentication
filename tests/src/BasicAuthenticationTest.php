@@ -72,6 +72,12 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         \Phramework\Authentication\Manager::setAttributes(
             ['user_type', 'email']
         );
+        
+        \Phramework\Authentication\Manager::setOnAuthenticateCallback(
+            function ($params) {
+                var_dump($params);
+            }
+        );
     }
 
     /**

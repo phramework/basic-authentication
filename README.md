@@ -1,17 +1,17 @@
 # jwt
-JWT authorization wrapper for phramework, using firebase/php-jwt
+Basic authentication implementation for phramework 
 
 ## Usage
 Require package
 
 ```
-composer require phramework/jwt
+composer require phramework/basicAuthentication
 ```
 
 ```php
 //Set authentication class
 \Phramework\Authentication\Manager::register(
-    \Phramework\Authentication\JWT::class
+    \Phramework\Authentication\BasicAuthentication::class
 );
 
 //Set method to fetch user object, including password attribute
