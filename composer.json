@@ -1,16 +1,12 @@
 {
-  "name": "phramework/basicAuthentication",
-  "description": "basicAuthentication implementation for Phramework",
+  "name": "phramework/basic-authentication",
+  "description": "Basic authentication implementation for Phramework",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Phramework",
   "authors": [{
     "name": "Xenophon Spafaridis",
     "email": "nohponex@gmail.com",
     "homepage": "https://nohponex.gr"
-  }],
-  "repositories": [{
-    "type": "vcs",
-    "url": "git@gitlab.mathlogic.eu:Phramework/Phramework.git"
   }],
   "require": {
     "php": ">=5.6",

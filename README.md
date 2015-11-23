@@ -1,11 +1,11 @@
 # jwt
-Basic authentication implementation for phramework 
+Basic authentication implementation for phramework
 
 ## Usage
 Require package
 
 ```
-composer require phramework/basicAuthentication
+composer require phramework/basic-authentication
 ```
 
 ```php
