@@ -217,7 +217,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         //Pick a random user index
         $index = 0; //rand(0, count(self::$users) - 1);
 
-        $token = $this->object->authenticate(
+        list($user) = $this->object->authenticate(
             [
                 'email' => self::$users[$index]['email'],
                 'password' => '123456' //Since password is the same for all of them
@@ -225,8 +225,17 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
             Phramework::METHOD_POST,
             []
         );
+        
+        $this->assertInternalType('object', $user, 'Expect an object');
 
-        $this->assertInternalType('object', $token);
+        $this->assertObjectHasAttribute('id', $user);
+        $this->assertObjectHasAttribute('email', $user);
+        $this->assertObjectHasAttribute('user_type', $user);
+        $this->assertObjectNotHasAttribute('password', $user);
+
+        $this->assertSame(self::$users[$index]['id'], $user->id);
+        $this->assertSame(self::$users[$index]['email'], $user->email);
+        $this->assertSame(self::$users[$index]['user_type'], $user->user_type);
     }
 
     /**

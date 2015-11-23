@@ -82,7 +82,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
         $email    = Validate::email($tokenParts[0]);
         $password = $tokenParts[1];
 
-        $result = $this->authenticate(
+        list($user) = $this->authenticate(
             [
                 'email' => $email,
                 'password' => $password,
@@ -91,14 +91,14 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             $headers
         );
 
-        if ($result !== false && ($callback = Manager::getOnCheckCallback()) !== null) {
+        if ($user !== false && ($callback = Manager::getOnCheckCallback()) !== null) {
             call_user_func(
                 $callback,
-                $result
+                $user
             );
         }
 
-        return $result;
+        return $user;
     }
 
     /**
@@ -106,7 +106,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
      * @param  array  $params  Request parameters
      * @param  string $method  Request method
      * @param  array  $headers  Request headers
-     * @return false  Returns false on failure
+     * @return false|array  Returns false on failure
      */
     public function authenticate($params, $method, $headers)
     {
@@ -141,6 +141,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             $data[$attribute] = $user[$attribute];
         }
 
+        //Convert to object
         $data = (object)$data;
 
         //Call onAuthenticate callback if set
@@ -151,6 +152,6 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             );
         }
 
-        return $data;
+        return [$data];
     }
 }
