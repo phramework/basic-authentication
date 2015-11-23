@@ -82,7 +82,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
         $email    = Validate::email($tokenParts[0]);
         $password = $tokenParts[1];
 
-        return $this->authenticate(
+        $result = $this->authenticate(
             [
                 'email' => $email,
                 'password' => $password,
@@ -90,6 +90,15 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             $method,
             $headers
         );
+
+        if ($result !== false && ($callback = Manager::getOnCheckCallback()) !== null) {
+            call_user_func(
+                $callback,
+                $result
+            );
+        }
+
+        return $result;
     }
 
     /**

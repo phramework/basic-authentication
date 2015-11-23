@@ -11,7 +11,7 @@ composer require phramework/basic-authentication
 ```php
 //Set authentication class
 \Phramework\Authentication\Manager::register(
-    \Phramework\Authentication\BasicAuthentication::class
+    \Phramework\Authentication\BasicAuthentication\BasicAuthentication::class
 );
 
 //Set method to fetch user object, including password attribute
