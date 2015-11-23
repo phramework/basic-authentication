@@ -72,10 +72,13 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         \Phramework\Authentication\Manager::setAttributes(
             ['user_type', 'email']
         );
-        
+
         \Phramework\Authentication\Manager::setOnAuthenticateCallback(
-            function ($params) {
-                var_dump($params);
+            /**
+             * @param object $data User data object
+             */
+            function ($data) {
+                //var_dump($params);
             }
         );
     }
@@ -90,7 +93,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Phramework\BasicAuthentication\Models\BasicAuthentication::check
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::check
      */
     public function testCheckFailure()
     {
@@ -104,7 +107,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
             [],
             Phramework::METHOD_GET,
             ['Authorization' => 'Bearer ABCDEF']
-        ), 'Expect false, since Authorization header is not Bearer');
+        ), 'Expect false, since Authorization header is not Basic');
 
         $this->assertFalse($this->object->check(
             [],
@@ -122,7 +125,37 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Phramework\BasicAuthentication\Models\BasicAuthentication::authenticate
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::testProvidedMethod
+     */
+    public function testTestProvidedMethodFailure()
+    {
+        $this->assertFalse($this->object->testProvidedMethod(
+            [],
+            Phramework::METHOD_GET,
+            []
+        ), 'Expect false, since Authorization header is not provided');
+
+        $this->assertFalse($this->object->testProvidedMethod(
+            [],
+            Phramework::METHOD_GET,
+            ['Authorization' => 'Bearer ABCDEF']
+        ), 'Expect false, since Authorization header is not Basic');
+    }
+
+    /**
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::testProvidedMethod
+     */
+    public function testTestProvidedMethodSuccess()
+    {
+        $this->assertTrue($this->object->testProvidedMethod(
+            [],
+            Phramework::METHOD_GET,
+            ['Authorization' => 'Basic zm9ocG9uZXsg6MTIzNDU2Nzh4WA==']
+        ), 'Expect true, even though credentials are not correct');
+    }
+
+    /**
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::authenticate
      * @expectedException Exception
      */
     public function testAuthenticateExpectException()
@@ -138,7 +171,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Phramework\BasicAuthentication\Models\BasicAuthentication::authenticate
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::authenticate
      */
     public function testAuthenticateFailure()
     {
@@ -168,7 +201,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Phramework\BasicAuthentication\Models\BasicAuthentication::authenticate
+     * @covers Phramework\Authentication\BasicAuthentication\BasicAuthentication::authenticate
      */
     public function testAuthenticateSuccess()
     {

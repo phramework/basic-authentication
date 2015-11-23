@@ -70,7 +70,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
         if (!$token) {
             return false;
         }
-        
+
         $tokenDecoded = base64_decode($token);
 
         $tokenParts = explode(':', $tokenDecoded);
@@ -132,6 +132,16 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             $data[$attribute] = $user[$attribute];
         }
 
-        return (object)$data;
+        $data = (object)$data;
+
+        //Call onAuthenticate callback if set
+        if (($callback = Manager::getOnAuthenticateCallback()) !== null) {
+            call_user_func(
+                $callback,
+                $data
+            );
+        }
+
+        return $data;
     }
 }
