@@ -1,6 +1,8 @@
 # jwt
 Basic authentication implementation for phramework
 
+[![Build Status](https://travis-ci.org/phramework/basic-authentication.svg?branch=master)](https://travis-ci.org/phramework/basic-authentication)
+
 ## Usage
 Require package
 
