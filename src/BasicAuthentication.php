@@ -18,7 +18,6 @@
 namespace Phramework\Authentication\BasicAuthentication;
 
 use \Phramework\Phramework;
-use \Phramework\Validate\Validate;
 use \Phramework\Authentication\Manager;
 
 /**
@@ -79,7 +78,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
             return false;
         }
 
-        $email    = Validate::email($tokenParts[0]);
+        $email    = \Phramework\Validate\EmailValidator::parseStatic($tokenParts[0]);
         $password = $tokenParts[1];
 
         list($user) = $this->authenticate(
@@ -110,7 +109,7 @@ class BasicAuthentication implements \Phramework\Authentication\IAuthentication
      */
     public function authenticate($params, $method, $headers)
     {
-        $email = Validate::email($params['email']);
+        $email = \Phramework\Validate\EmailValidator::parseStatic($params['email']);
         $password = $params['password'];
 
         $user = call_user_func(Manager::getUserGetByEmailMethod(), $email);

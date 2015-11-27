@@ -2,7 +2,8 @@
   "name": "phramework/basic-authentication",
   "description": "Basic authentication implementation for Phramework",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/Phramework",
+  "homepage": "https://phramework.github.io/",
+  "type": "library",
   "authors": [{
     "name": "Xenophon Spafaridis",
     "email": "nohponex@gmail.com",
@@ -18,6 +19,7 @@
     "phpunit/phpunit": "5.*",
     "satooshi/php-coveralls": "dev-master"
   },
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
