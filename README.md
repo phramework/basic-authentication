@@ -1,4 +1,4 @@
-# jwt
+# phramework/basic-authentication
 Basic authentication implementation for phramework
 
 [![Build Status](https://travis-ci.org/phramework/basic-authentication.svg?branch=master)](https://travis-ci.org/phramework/basic-authentication)
@@ -40,7 +40,7 @@ composer test
 ```
 
 # License
-Copyright 2015 Xenofon Spafaridis
+Copyright 2015-2016 Xenofon Spafaridis
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
