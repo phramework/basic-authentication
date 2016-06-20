@@ -151,10 +151,8 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         $authentication = new BasicAuthentication();
 
         $authentication(
-            (
-                $this->request
-                    ->withHeader('Authorization', $header)
-            ),
+            $this->request
+                ->withHeader('Authorization', $header),
             $this->response,
             $next
         );
@@ -199,17 +197,15 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         $authentication = new BasicAuthentication();
 
         $authentication(
-            (
-                $this->request
-                    ->withHeader('Authorization', $header)
-            ),
+            $this->request
+                ->withHeader('Authorization', $header),
             $this->response,
             $next
         );
     }
 
     /**
-     * @covers ::testProvidedMethod
+     * @covers ::extractAuthentication
      * @dataProvider invokeInvalidOrUnrelated
      */
     public function testInvoke(string $header)
@@ -217,7 +213,7 @@ class BasicAuthenticationTest extends \PHPUnit_Framework_TestCase
         return $this->testInvokeInvalidOrUnrelated($header);
     }
     /**
-     * @covers ::testProvidedMethod
+     * @covers ::extractAuthentication
      * @dataProvider invokeSuccess
      */
     public function testMethodSuccess(string $header, string $identity)

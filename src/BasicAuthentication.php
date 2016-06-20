@@ -28,16 +28,23 @@ use Psr\Http\Message\ServerRequestInterface;
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  * @author Xenofon Spafaridis <nohponex@gmail.com>
  * @uses password_verify to verify user's password
- * @since 0.0.0
+ * @since 1.0.0
  */
 class BasicAuthentication extends Authentication
 {
+    /**
+     * Middleware handler
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface      $response
+     * @param callable               $next
+     * @return ResponseInterface
+     */
     public function __invoke(
         ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next
     ) : ResponseInterface {
-        $test = static::testProvidedMethod($request);
+        $test = static::extractAuthentication($request);
 
         if ($test === null) {
             goto ret;
@@ -45,12 +52,7 @@ class BasicAuthentication extends Authentication
 
         list($identity, $password) = $test;
 
-        $callback = Manager::getUserSessionCallback();
-
-        /**
-         * @var UserSession|null
-         */
-        $userSession = $callback($identity);
+        $userSession = Manager::callUserSessionCallback($identity);
 
         if ($userSession === null) {
             goto ret;
@@ -60,20 +62,19 @@ class BasicAuthentication extends Authentication
             goto ret;
         }
 
-        $userSession->clearPassword();
-
-        //Add userSession object to session attribute
-        $request = $request->withAttribute('session', $userSession);
+        //Store attribute at request
+        $request = Manager::storeAttributes($request, $userSession);
 
         ret:
         return $next($request, $response);
     }
 
     /**
+     * Extract identity and password from request
      * @param ServerRequestInterface $request
-     * @return string[]|null
+     * @return string[]|null On success returns [$identity, $password] else null
      */
-    protected static function testProvidedMethod(
+    protected static function extractAuthentication(
         ServerRequestInterface $request
     ) {
         $header = $request->getHeader('Authorization');
